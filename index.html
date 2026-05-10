@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Porch Restaurant – Taste that feels like home</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome 6 (fixes icon display) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+  :root {
+    --brown:      #4a2500;
+    --dark-brown: #2c1500;
+    --gold:       #c4943a;
+    --cream:      #fdf6ee;
+    --light:      #fff9f3;
+    --text:       #2c1500;
+    --muted:      #7a5c3f;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--light); color: var(--text); }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 48px;
+    background: rgba(255,249,243,0.97);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(196,148,58,0.18);
+    box-shadow: 0 2px 20px rgba(74,37,0,0.07);
+  }
+  .nav-logo img { height: 48px; object-fit: contain; display: block; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--brown);
+    font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: var(--brown); color: #fff;
+    padding: 10px 22px; border-radius: 30px;
+    font-weight: 700; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--gold); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; position: relative;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: url('hero.jpg') center/cover no-repeat;
+    filter: brightness(0.45);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(44,21,0,.7) 0%, rgba(74,37,0,.35) 100%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 680px; margin-left: 10%;
+    animation: fadeUp 1s ease forwards;
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--gold); color: #fff;
+    padding: 6px 18px; border-radius: 20px;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 700; margin-bottom: 24px;
+  }
+  .hero-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(46px, 6vw, 80px); line-height: 1.1;
+    color: #fff; margin-bottom: 20px;
+  }
+  .hero-title em { color: var(--gold); font-style: italic; }
+  .hero-sub {
+    font-size: 18px; color: rgba(255,255,255,.85);
+    font-weight: 300; line-height: 1.7; margin-bottom: 40px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: #fff;
+    padding: 15px 34px; border-radius: 50px;
+    font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; transition: all .25s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #a67828; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,148,58,.4); }
+  .btn-outline {
+    border: 2px solid rgba(255,255,255,.7); color: #fff;
+    padding: 15px 34px; border-radius: 50px;
+    font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    text-decoration: none; transition: all .25s;
+  }
+  .btn-outline:hover { background: rgba(255,255,255,.15); }
+
+  /* ── SECTIONS SHARED ── */
+  section { padding: 96px 48px; }
+  .section-tag {
+    display: block; text-align: center;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(30px, 4vw, 50px); font-weight: 700;
+    text-align: center; color: var(--brown); margin-bottom: 16px;
+  }
+  .section-sub {
+    text-align: center; max-width: 600px; margin: 0 auto 56px;
+    color: var(--muted); font-size: 16px; line-height: 1.8; font-weight: 300;
+  }
+
+  /* ── ABOUT ── */
+  .about-strip {
+    background: var(--brown);
+    display: flex; align-items: stretch; padding: 0; min-height: 500px;
+  }
+  .about-img {
+    flex: 1; min-height: 360px;
+    background: url('rest.jpeg') center/cover no-repeat;
+  }
+  .about-text {
+    flex: 1; padding: 70px 52px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .about-text .section-tag { text-align: left; }
+  .about-text .section-title { text-align: left; color: #fff; }
+  .about-text p {
+    color: rgba(255,255,255,.8); font-size: 16px; line-height: 1.9;
+    font-weight: 300; margin-bottom: 20px;
+  }
+  .about-text .btn-primary { align-self: flex-start; margin-top: 16px; }
+
+  /* ── MENU ── */
+  #menu { background: var(--cream); }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px; max-width: 1200px; margin: 0 auto;
+  }
+  .menu-card {
+    background: #fff; border-radius: 16px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(74,37,0,.08);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .menu-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(74,37,0,.14); }
+  .menu-card-img { height: 220px; overflow: hidden; }
+  .menu-card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; display: block; }
+  .menu-card:hover .menu-card-img img { transform: scale(1.06); }
+  .menu-card-body { padding: 22px 24px; }
+  .menu-card-cat { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
+  .menu-card-name { font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 600; color: var(--brown); margin-bottom: 8px; }
+  .menu-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+  .menu-card-badge {
+    display: inline-block; background: var(--cream);
+    color: var(--brown); padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px;
+    border: 1px solid rgba(196,148,58,.3);
+  }
+
+  /* ── ORDER ── */
+  #order {
+    background: linear-gradient(135deg, var(--brown) 0%, var(--dark-brown) 100%);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #order::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('food.jpg') center/cover no-repeat;
+    opacity: .07;
+  }
+  #order .section-title { color: #fff; position: relative; }
+  #order .section-sub  { color: rgba(255,255,255,.75); position: relative; }
+  .order-box {
+    position: relative;
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 24px; padding: 48px;
+    max-width: 600px; margin: 0 auto;
+    backdrop-filter: blur(8px);
+  }
+  .whatsapp-btn {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: #25D366; color: #fff;
+    padding: 18px 48px; border-radius: 50px;
+    font-weight: 700; font-size: 15px; letter-spacing: 1px;
+    text-decoration: none; transition: all .25s;
+    box-shadow: 0 8px 32px rgba(37,211,102,.35);
+  }
+  .whatsapp-btn:hover { background: #1ebe5d; transform: translateY(-2px); box-shadow: 0 12px 40px rgba(37,211,102,.45); }
+  .order-note { color: rgba(255,255,255,.55); font-size: 13px; margin-top: 16px; }
+
+  /* ── GALLERY ── */
+  #gallery { background: #fff; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px; max-width: 1100px; margin: 0 auto;
+  }
+  .gallery-item { overflow: hidden; border-radius: 12px; cursor: pointer; position: relative; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; display: block; }
+  .gallery-item:hover img { transform: scale(1.05); }
+  .gallery-item:first-child { grid-column: span 2; height: 360px; }
+  .gallery-item:nth-child(2) { height: 360px; }
+  .gallery-item:nth-child(3),
+  .gallery-item:nth-child(4),
+  .gallery-item:nth-child(5) { height: 240px; }
+  .gallery-overlay {
+    position: absolute; inset: 0;
+    background: rgba(44,21,0,0); transition: background .3s;
+  }
+  .gallery-item:hover .gallery-overlay { background: rgba(44,21,0,.22); }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1100px; margin: 0 auto; }
+  .contact-info h3 { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--brown); margin-bottom: 24px; }
+  .contact-detail { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 24px; }
+  .contact-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: var(--brown); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0; margin-top: 2px;
+  }
+  .contact-detail-text h4 {
+    font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--brown); margin-bottom: 4px;
+  }
+  .contact-detail-text p { color: var(--muted); font-size: 15px; line-height: 1.7; }
+  .contact-detail-text a { color: var(--gold); text-decoration: none; }
+  .map-embed { border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(74,37,0,.1); margin-top: 32px; height: 260px; }
+  .map-embed iframe { width: 100%; height: 100%; border: 0; }
+
+  /* ── FORM ── */
+  .contact-form-wrap { background: #fff; border-radius: 20px; padding: 40px; box-shadow: 0 4px 24px rgba(74,37,0,.08); }
+  .contact-form-wrap h3 { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--brown); margin-bottom: 28px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; color: var(--brown); margin-bottom: 8px; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%; padding: 13px 16px;
+    border: 1.5px solid rgba(196,148,58,.3); border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--text);
+    background: #fff; outline: none; transition: border-color .2s;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus { border-color: var(--gold); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .submit-btn {
+    width: 100%; background: var(--brown); color: #fff;
+    padding: 16px; border: none; border-radius: 50px;
+    font-family: 'DM Sans', sans-serif; font-weight: 700;
+    font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    cursor: pointer; transition: background .25s;
+  }
+  .submit-btn:hover { background: var(--gold); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark-brown); color: rgba(255,255,255,.7);
+    padding: 52px 48px; text-align: center;
+  }
+  footer img.footer-logo { height: 60px; margin-bottom: 16px; opacity: .9; }
+  footer .tagline { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 16px; color: var(--gold); margin-bottom: 6px; }
+  .social-links { display: flex; justify-content: center; gap: 14px; margin: 24px 0 20px; }
+  .social-link {
+    width: 44px; height: 44px; border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.25);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: rgba(255,255,255,.75);
+    font-size: 18px; transition: all .2s;
+  }
+  .social-link:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+  .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,.1); margin: 0 auto 20px; max-width: 400px; }
+  footer .copy { font-size: 12px; color: rgba(255,255,255,.45); }
+
+  /* ── FLOATING WHATSAPP ── */
+  .wa-float {
+    position: fixed; bottom: 32px; right: 32px; z-index: 9999;
+    width: 58px; height: 58px; border-radius: 50%;
+    background: #25D366; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; text-decoration: none;
+    box-shadow: 0 6px 24px rgba(37,211,102,.45);
+    transition: transform .25s, box-shadow .25s;
+    animation: pulse 2.5s infinite;
+  }
+  .wa-float:hover { transform: scale(1.12); box-shadow: 0 10px 32px rgba(37,211,102,.6); animation: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,.45); }
+    50%       { box-shadow: 0 6px 36px rgba(37,211,102,.7); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    section { padding: 64px 20px; }
+    .hero-content { margin-left: 5%; margin-right: 5%; }
+    .about-strip { flex-direction: column; }
+    .about-img { min-height: 280px; }
+    .about-text { padding: 40px 28px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-item:first-child { grid-column: span 2; height: 240px; }
+    .form-row { grid-template-columns: 1fr; }
+    .wa-float { bottom: 20px; right: 20px; width: 52px; height: 52px; font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating WhatsApp -->
+<a class="wa-float" href="https://wa.me/2347060480907" target="_blank" title="Chat on WhatsApp">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- NAV -->
+<nav>
+  <a href="#home">
+    <img src="logo.jpg" alt="The Porch Restaurant" style="height:48px;object-fit:contain;"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://wa.me/2347060480907" target="_blank" class="nav-cta">Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section id="home" class="hero" style="padding:0;">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Welcome to The Porch Restaurant</span>
+    <h1 class="hero-title">Taste that feels<br/><em>like home...</em></h1>
+    <p class="hero-sub">Authentic Nigerian flavors crafted with love and served with warmth — right here in the heart of Benin City, Edo State.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn-primary">✦ Explore Our Menu</a>
+      <a href="#order" class="btn-outline">Order via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about-strip" id="about">
+  <div class="about-img"></div>
+  <div class="about-text">
+    <span class="section-tag">Our Story</span>
+    <h2 class="section-title" style="margin-bottom:24px;">A Place That<br/>Feels Like Home</h2>
+    <p>At The Porch Restaurant, we believe great food is more than just a meal — it's an experience, a memory, and a feeling of warmth. Nestled in Benin City, we bring you the finest Nigerian home-cooking in a modern, welcoming space.</p>
+    <p>From our signature stews to crispy fried chicken, every dish is prepared fresh daily with the finest ingredients and seasoned with genuine care — because you deserve a taste that truly feels like home.</p>
+    <a href="#menu" class="btn-primary" style="margin-top:24px;">See Our Menu </a>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <span class="section-tag">What We Serve</span>
+  <h2 class="section-title">Our Menu Highlights</h2>
+  <p class="section-sub">From hearty local staples to savory small chops — every dish on our menu is made fresh, daily, with love.</p>
+  <div class="menu-grid">
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="fd.jpeg" alt="Ofada Rice & Ayamase Stew"/>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-cat">Main Course</div>
+        <div class="menu-card-name">Ofada Rice & Ayamase Stew</div>
+        <div class="menu-card-desc">Our signature ofada rice served with rich, spiced Ayamase sauce, slow-cooked with assorted meats and a boiled egg.</div>
+        <span class="menu-card-badge">Signature Dish</span>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="food.jpg" alt="Crispy Fried Chicken Wings"/>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-cat">Grills & Proteins</div>
+        <div class="menu-card-name">Crispy Fried Chicken Wings</div>
+        <div class="menu-card-desc">Juicy, golden-fried wings seasoned with our special house blend — crispy on the outside, tender inside.</div>
+        <span class="menu-card-badge">Fan Favourite</span>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="mp.jpg" alt="Homemade Meat Pies"/>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-cat">Pastries & Small Chops</div>
+        <div class="menu-card-name">Homemade Meat Pies</div>
+        <div class="menu-card-desc">Flaky, golden pastry filled with spiced minced beef, diced potatoes and carrots — baked fresh every morning.</div>
+        <span class="menu-card-badge">Baked Fresh Daily</span>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="rolls.jpg" alt="Crispy Spring Rolls"/>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-cat">Small Chops</div>
+        <div class="menu-card-name">Crispy Spring Rolls</div>
+        <div class="menu-card-desc">Light, golden-fried spring rolls packed with a delicious vegetable and meat filling — perfect as a starter or snack.</div>
+        <span class="menu-card-badge">Perfect for Events</span>
+      </div>
+    </div>
+
+    <div class="menu-card">
+      <div class="menu-card-img">
+        <img src="rice.jpg" alt="Jollof & Fried Rice"/>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-cat">Main Course</div>
+        <div class="menu-card-name">Jollof & Fried Rice</div>
+        <div class="menu-card-desc">Party-style jollof rice and fragrant fried rice served with your choice of grilled or fried protein, cooked in generous portions.</div>
+        <span class="menu-card-badge">Daily Special</span>
+      </div>
+    </div>
+
+    <div class="menu-card" style="background:var(--brown); color:#fff;">
+      <div class="menu-card-body" style="padding:40px 28px; height:100%; display:flex; flex-direction:column; justify-content:center;">
+        <div class="menu-card-cat" style="color:var(--gold);">And More</div>
+        <div class="menu-card-name" style="color:#fff; font-size:22px; margin-bottom:14px;">Explore the Full Menu</div>
+        <p style="color:rgba(255,255,255,.75); font-size:14px; line-height:1.8; margin-bottom:24px;">Soups & swallow, pepper soup, grilled fish, assorted meats, stews, and chilled drinks — all freshly prepared daily.</p>
+        <a href="https://wa.me/2347060480907" target="_blank" class="btn-primary" style="align-self:flex-start; font-size:12px; padding:11px 22px;">Chat to Order →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ORDER ONLINE -->
+<section id="order">
+  <span class="section-tag" style="position:relative;">Order Online</span>
+  <h2 class="section-title">Ready to Order?</h2>
+  <p class="section-sub">Ordering from The Porch is easy. Tap the button below and chat with us directly on WhatsApp — we'll handle the rest.</p>
+  <div class="order-box">
+    <p style="color:rgba(255,255,255,.85); font-size:16px; margin-bottom:28px; font-family:'DM Serif Display',serif; font-style:italic;">"The quickest way to your favourite meal is just one message away."</p>
+    <a href="https://wa.me/2347060480907" target="_blank" class="whatsapp-btn">
+      <i class="fa-brands fa-whatsapp" style="font-size:22px;"></i>
+      Order on WhatsApp
+    </a>
+    <p class="order-note">Open daily &bull; Dine-in, takeout &amp; delivery available</p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <span class="section-tag">Our Space</span>
+  <h2 class="section-title">Inside The Porch</h2>
+  <p class="section-sub">A modern, welcoming space designed for comfort — where every seat feels like your seat at home.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="ww.jpeg" alt="Lounge seating area"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="rec.jpeg" alt="Service counter"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="rec2.jpeg" alt="Staff at counter"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="rec3.jpg" alt="Food display"/>
+      <div class="gallery-overlay"></div>
+    </div>
+    <div class="gallery-item">
+      <img src="brand.jpg" alt="Restaurant interior"/>
+      <div class="gallery-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <span class="section-tag">Find Us</span>
+  <h2 class="section-title">Location & Contact</h2>
+  <p class="section-sub">Visit us in Benin City or reach out — we'd love to hear from you.</p>
+  <div class="contact-grid">
+
+    <div class="contact-info">
+      <h3>Get in Touch</h3>
+
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="contact-detail-text">
+          <h4>Location</h4>
+          <p>The Porch Restaurant<br/>Benin City, Edo State, Nigeria</p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
+        <div class="contact-detail-text">
+          <h4>WhatsApp & Phone</h4>
+          <p><a href="https://wa.me/2347060480907">+234 706 048 0907</a></p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="contact-detail-text">
+          <h4>Opening Hours</h4>
+          <p>Monday – Sunday<br/>10:00 AM – 9:00 PM</p>
+        </div>
+      </div>
+
+      <div class="contact-detail">
+        <div class="contact-icon"><i class="fa-solid fa-share-nodes"></i></div>
+        <div class="contact-detail-text">
+          <h4>Follow Us</h4>
+          <p><a href="https://www.instagram.com/the_porchrestaurant/" target="_blank">@the_porchrestaurant</a> on TikTok &amp; Instagram</p>
+        </div>
+      </div>
+
+      <!-- Real address embed for The Porch Restaurant, Benin City -->
+      <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127394.52!2d5.5886!3d6.3366!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1040d306b7b9b1a3%3A0x7b5d2f67a38d9b3a!2sBenin%20City%2C%20Edo%20State%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng"
+          loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </div>
+
+    <div class="contact-form-wrap">
+      <h3>Send Us a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="First name"/>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Last name"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Phone / WhatsApp</label>
+        <input type="tel" placeholder="Your phone number"/>
+      </div>
+      <div class="form-group">
+        <label>I'm interested in…</label>
+        <select>
+          <option>Dining In</option>
+          <option>Takeout / Delivery</option>
+          <option>Event Catering</option>
+          <option>General Enquiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Tell us what you're looking for, or just say hello!"></textarea>
+      </div>
+      <button class="submit-btn" onclick="alert('Thank you! We\'ll be in touch soon.\nFor a faster response, chat with us on WhatsApp.')">Send Message</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo" src="logo.jpg" alt="The Porch Restaurant"/>
+  <p class="tagline">"Taste that feels like home..."</p>
+
+  <div class="social-links">
+    <a class="social-link" href="https://www.tiktok.com/@the_porchrestaurant" target="_blank" title="TikTok">
+      <i class="fa-brands fa-tiktok"></i>
+    </a>
+    <a class="social-link" href="https://wa.me/2347060480907" target="_blank" title="WhatsApp">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+    <a class="social-link" href="https://www.instagram.com/the_porchrestaurant/" target="_blank" title="Instagram">
+      <i class="fa-brands fa-instagram"></i>
+    </a>
+  </div>
+
+  <hr class="footer-divider"/>
+  <p class="copy">© 2025 The Porch Restaurant, Benin City, Edo State, Nigeria. All rights reserved.</p>
+</footer>
+
+<script>
+  // Active nav link highlight on scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 110) current = sec.id;
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>
