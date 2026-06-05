@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet"/>
 
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="fontawesome/css/all.css">
 
 <style>
   :root {
@@ -43,6 +43,31 @@
     transition: color 0.2s;
   }
   .nav-links a:hover { color: var(--gold); }
+  .nav-links a.active { color: var(--gold); }
+  .nav-toggle {
+    display: none;
+    border: none;
+    background: transparent;
+    color: var(--brown);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .nav-links.show {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 18px 24px 24px;
+    background: rgba(255,249,243,.98);
+    border-bottom: 1px solid rgba(196,148,58,.18);
+  }
+  .nav-links.show li { border-bottom: 1px solid rgba(196,148,58,.12); }
+  .nav-links.show li:last-child { border-bottom: none; }
+  .nav-links.show a { padding: 14px 0; }
   .nav-cta {
     background: var(--brown); color: #fff;
     padding: 10px 22px; border-radius: 30px;
@@ -305,6 +330,7 @@
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
     .nav-links { display: none; }
+    .nav-toggle { display: flex; }
     section { padding: 64px 20px; }
     .hero-content { margin-left: 5%; margin-right: 5%; }
     .about-strip { flex-direction: column; }
@@ -567,7 +593,7 @@
         <label>Message</label>
         <textarea placeholder="Tell us what you're looking for, or just say hello!"></textarea>
       </div>
-      <button class="submit-btn" onclick="alert('Thank you! We\'ll be in touch soon.\nFor a faster response, chat with us on WhatsApp.')">Send Message</button>
+      <button class="submit-btn">Send Message</button>
     </div>
 
   </div>
@@ -593,20 +619,6 @@
   <p class="copy">© 2025 The Porch Restaurant, Benin City, Edo State, Nigeria. All rights reserved.</p>
 </footer>
 
-<script>
-
-  const sections = document.querySelectorAll('section[id], div[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(sec => {
-      if (window.scrollY >= sec.offsetTop - 110) current = sec.id;
-    });
-    navLinks.forEach(link => {
-      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
-    });
-  });
-</script>
+<script src="/js/script.js" defer></script>
 </body>
 </html>
