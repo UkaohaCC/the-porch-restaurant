@@ -42,7 +42,7 @@
       });
     }
 
-    // To highlight the active section in the navigation based on scroll position.
+    // To highlight the active section in the navigation based on scroll position
     function updateActiveLink() {
       const scrollPosition = window.scrollY;
       let activeId = '';
